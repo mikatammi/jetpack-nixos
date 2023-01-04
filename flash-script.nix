@@ -44,8 +44,6 @@ writeShellScriptBin "flash-${name}" (''
 
   chmod -R u+w .
 
-'' + (if (flashArgs != null) then ''
-  ./flash.sh ${lib.optionalString (partitionTemplate != null) "-c flash.xml"} $@ ${flashArgs}
-'' else ''
-  ${runtimeShell}
-''))
+  # This flashing will fail, but it is a required step. Otherwise kernels won't boot.
+  ./flash.sh jetson-agx-orin-devkit mmcblk0p1
+'')

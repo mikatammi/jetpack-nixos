@@ -1,3 +1,15 @@
+# Hack for flashing NVIDIA Jetson Orin
+
+Connect Orin-board with USB-cable to your computer. Enter recovery mode by pressing the recovery button (middle button), and then click reset button (the right one) while holding the recovery button. Then just run:
+
+    sudo nix run .#packages.x86_64-linux.flash-orin-agx-devkit
+
+After you get some error like "Error: Return value 10" and "Failed flashing t186ref", reset and enter recovery mode again. Then run the flashing command from the mainline jetpack-nixos:
+
+    sudo nix run github:anduril/jetpack-nixos#flash-orin-agx-devkit
+
+Then you should have latest r35.1 UEFI firmware and be able to boot from USB. You should only need to do this once.
+
 # NixOS module for NVIDIA Jetson devices
 
 This repository packages components from NVIDIA's [Jetpack SDK](https://developer.nvidia.com/embedded/jetpack) for use with NixOS, including:
