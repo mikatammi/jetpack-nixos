@@ -8,6 +8,7 @@
 , libuuid
 , dtc
 , nukeReferences
+, fetchpatch2
 }:
 
 let
@@ -27,7 +28,14 @@ let
     pname = "optee_client";
     version = l4tVersion;
     src = nvopteeSrc;
-    patches = [ ./0001-Don-t-prepend-foo-bar-baz-to-TEEC_LOAD_PATH.patch ];
+    patches = [
+      (fetchpatch2 {
+        url = "https://github.com/OP-TEE/optee_client/commit/c84206b27d44f8dbe5271d700b952ae10f19ee73.patch";
+        hash = "sha256-dsm06EhTg/jdqNYTOTFwfVRLg/oc0v1rZC5dUns5KP0=";
+	stripLen = 2;
+	extraPrefix = "optee/optee_client/";
+      })
+    ];
     nativeBuildInputs = [ pkg-config ];
     buildInputs = [ libuuid ];
     makeFlags = [ "-C optee/optee_client" "DESTDIR=$(out)" "SBINDIR=/bin" "LIBDIR=/lib" "INCLUDEDIR=/include" ];
